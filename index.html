@@ -8,153 +8,179 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:800|Quicksand:500,700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --main-color: #4834d4;
-      --accent-color: #fd9644;
-      --bg: #f4f7fa;
-      --card-bg: #fff;
-      --card-match-bg: #9effa9;
-      --card-flip-bg: #ffd460;
-      --text: #1e272e;
-      --font-brand: 'Montserrat', Arial, sans-serif;
-      --font-main: 'Quicksand', Arial, sans-serif;
+      --primary: #5440d6;
+      --accent: #ff993c;
+      --success: #22d37e;
+      --danger: #ea5455;
+      --surface: #f7f8fc;
+      --card: #fff;
+      --card-border: #e0e4eb;
+      --match-bg: #cafeac;
+      --flash-bg: #ffe085;
+      --flash-border: #ffaf40;
+      --brand-font: 'Montserrat', Arial, sans-serif;
+      --main-font: 'Quicksand', Arial, sans-serif;
     }
-    body {
+    html,body {
       margin: 0;
       padding: 0;
-      background: var(--bg);
-      min-height:100vh;
-      width:100vw;
+      background: var(--surface);
+      min-height: 100vh;
+      width: 100vw;
       overflow: hidden;
-      font-family: var(--font-main);
+      font-family: var(--main-font);
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     .branding {
-      font-family: var(--font-brand);
-      font-size: 2.1rem;
-      letter-spacing: 1px;
-      color: var(--main-color);
-      font-weight: 800;
-      padding: 20px 0 6px 0;
+      font-family: var(--brand-font);
+      font-size: 2.3rem;
+      letter-spacing: 2px;
+      color: var(--primary);
+      font-weight: 900;
+      background: linear-gradient(90deg,#ff993c 5%,#5440d6 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding: 30px 0 10px 0;
       text-align: center;
-      background: none;
       width:100vw;
       user-select: none;
+      text-shadow: 0 2px 7px #fff4;
     }
     .game-container {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 5px 20px 0 rgba(72,52,212,0.11);
-      margin: 10px 0 0 0;
-      width: 98vw;
-      max-width: 435px;
-      min-height: 66vh;
+      background: var(--card);
+      border-radius: 24px;
+      box-shadow: 0 6px 24px 0 #5440d61c, 0 2px 10px #aaa2ee18;
+      width: 96vw;
+      max-width: 440px;
+      min-height: 65vh;
+      margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
-      padding-bottom: 2vh;
+      padding-bottom: 1vh;
     }
     .game-stats {
-      text-align:center;
-      margin: 8px 0 6px 0;
-      color: var(--accent-color);
-      font-family: var(--font-brand);
-      font-size: 1.08rem;
-      font-weight:700;
+      text-align: center;
+      margin: 12px 0 4px 0;
+      color: var(--accent);
+      font-family: var(--brand-font);
+      font-size: 1.1rem;
+      font-weight:800;
     }
     .grid {
       display: grid;
       gap: 11px;
       justify-content: center;
       width: 92vw;
-      max-width: 386px;
+      max-width: 410px;
       margin: 0 auto;
       user-select:none;
+      margin-bottom: 5px;
     }
     .card {
-      background: var(--card-bg);
-      border-radius: 11px;
-      box-shadow: 0 1.5px 7px rgba(72,52,212,0.07);
-      width: 66px;
-      height: 78px;
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 1.5px 8px #5440d61a;
+      width: 60px;
+      height: 74px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size:2rem;
       font-family: 'Segoe UI Emoji', 'Noto Emoji', 'Quicksand', Apple Color Emoji, 'EmojiOne Color', sans-serif;
       cursor: pointer;
-      transition: transform 0.22s cubic-bezier(.4,2.3,.3,1), box-shadow 0.11s, background 0.22s, color 0.18s;
-      color: var(--main-color);
-      backface-visibility: hidden;
+      border: 3px solid var(--card-border);
+      transition: 
+        transform 0.18s cubic-bezier(.4,2,.4,1), 
+        box-shadow 0.11s, 
+        background 0.16s, 
+        border 0.12s,
+        color 0.18s;
+      color: var(--primary);
       font-weight: 700;
-      border: 2.5px solid #dae1ed;
-    }
-    .card.flashing, .card.flipped, .card.done {
-      background: var(--card-flip-bg);
-      color: #4834d4;
+      backface-visibility: hidden;
+      outline: none;
+      position:relative;
     }
     .card.flashing {
-      outline: 3px solid #fd9644;
-      box-shadow: 0 0 0 3px #fd964444;
-      background: #ffd460;
-      color: #222;
-      font-size:2.12rem;
+      background: var(--flash-bg);
+      border: 3px solid var(--flash-border);
+      color: #333;
+      animation: flashpop 0.62s cubic-bezier(.34,1.4,.5,1) infinite alternate;
+      font-size:2.15rem;
+      z-index:2;
+    }
+    @keyframes flashpop {
+      to { box-shadow: 0 0 0 7px #ffedb3b7;}
     }
     .card.flipped {
-      background: #fff6c2;
-      color:#fd9644;
-      font-size:2.15rem;
+      background: #fffde7;
+      color: var(--accent);
+      border: 3px solid var(--accent);
+      transform: scale(1.06) rotateY(180deg);
+      font-size:2.18rem;
     }
-    .card.done {
-      background:var(--card-match-bg);
-      box-shadow: 0 3px 12px #c8e6c9;
-      color: #09840c;
-      animation: fadeOut 0.7s 0.15s forwards;
+    .card.matched {
+      background: var(--match-bg);
+      box-shadow: 0 3px 16px #a7ea92ad;
+      color: var(--success);
+      border: 3px solid var(--success);
+      animation: matchFade 0.85s 0.08s forwards;
+      z-index:1;
     }
-    @keyframes fadeOut {
-      to {
-        opacity:0;
-        transform: scale(1.18) rotateY(240deg);
-      }
+    @keyframes matchFade { 
+      0% {opacity:1;transform: scale(1.1);}
+      60% {transform: scale(1.18) rotateY(235deg);}
+      100%{opacity:0;transform: scale(1.26) rotateY(320deg);}
+    }
+    .card:active:not(.flipped):not(.matched) {
+      background-color: #ddd5ff;
+      transform: scale(0.93);
+      border-color: var(--primary);
     }
     .levelbadge {
-      background: var(--main-color);
-      color: white;
+      background: var(--primary);
+      color: #fff;
       font-size: 1rem;
-      padding: 4px 14px;
-      border-radius: 18px;
+      padding: 4px 13px;
+      border-radius: 17px;
       margin-left: 13px;
       font-weight: bold;
-      font-family: var(--font-brand);
+      font-family: var(--brand-font);
     }
     .btn {
-      margin: 14px 2px 0 0;
-      padding: 9px 28px;
-      font-size: 1.24rem;
-      font-family: var(--font-brand);
-      background: var(--main-color);
+      margin: 12px 2px 0 0;
+      padding: 9px 24px;
+      font-size: 1.1rem;
+      font-family: var(--brand-font);
+      background: var(--primary);
       color: white;
       border: none;
-      border-radius: 21px;
-      box-shadow: 0 2px 6px #aaa3ee44;
+      border-radius: 20px;
+      box-shadow: 0 2px 7px #5440d627;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: background 0.12s, transform 0.12s;
       font-weight:700;
     }
-    .btn:hover { background: #341f97; }
+    .btn:hover { background: #4232b5; transform:scale(1.04);}
     .message {
-      font-size:1.19rem;
+      font-size:1.15rem;
       text-align:center;
-      color:var(--main-color);
-      margin-top:12px;
-      min-height:31px;
-      font-family:var(--font-main);
+      color:var(--primary);
+      margin-top:10px;
+      min-height:30px;
+      font-family:var(--main-font);
+      font-weight:700;
+      letter-spacing:0.5px;
     }
     @media (max-width:380px){
-      .card{width:44px;height:50px;font-size:1.3rem;}
-      .game-container{padding-bottom:9vw;}
+      .card{width:42px;height:47px;font-size:1.2rem;}
+      .game-container{padding-bottom:10vw;}
+      .branding{font-size:1.25rem;}
     }
   </style>
 </head>
@@ -172,26 +198,159 @@
     <button class="btn" style="display:none;" id="restart-btn">Restart</button>
   </div>
   <script>
-    // ...Keep all JS logic (card emoji randomization, scoring) the same...
-    // Only update the card flashing logic:
+    const EMOJIS = [
+      "🐶","🐱","🦊","🐵","🐸","🦄","🦋","🐙",
+      "🐳","🦖","🌺","🍀","🍎","🍕","🍩","🥨",
+      "⚽","🎸","🎁","🚗","🚀","🧲","💡","🎲",
+      "🌈","🌵","⛄","🍦","🍉","🛸"
+    ];
+    const LEVELS = [4,6,8,10,12,14,16,18,20,22];
+    const LEVEL_LABELS = [
+      'Easy','Start','Warming Up','Wow!','Next!','Challenging',
+      'Really?','Hard','Genius!','Legend'
+    ];
+    let curLevel = 0, score = 0, canClick = false, matches = 0;
+    const gridElem = document.querySelector('.grid');
+    const levelElem = document.querySelector('.curlevel');
+    const badgeElem = document.querySelector('.levelbadge');
+    const scoreElem = document.querySelector('.score');
+    const msgElem = document.querySelector('.message');
+    const nextBtn = document.getElementById('next-btn');
+    const restartBtn = document.getElementById('restart-btn');
 
-    function flashAllCards(state) {
+    function shuffle(array) {
+      let a = array.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    function pickEmojis(n) {
+      let arr = shuffle(EMOJIS).slice(0, n / 2);
+      return shuffle([...arr, ...arr]);
+    }
+    function gridCols(num) {
+      if (num <= 4) return 'repeat(2, 1fr)';
+      if (num <= 6) return 'repeat(3, 1fr)';
+      if (num <= 8) return 'repeat(4, 1fr)';
+      if (num === 10) return 'repeat(5, 1fr)';
+      if (num === 12) return 'repeat(4, 1fr)';
+      if (num === 14 || num === 16) return 'repeat(4, 1fr)';
+      if (num === 18) return 'repeat(6, 1fr)';
+      return 'repeat(6, 1fr)';
+    }
+    function layoutCards(n) {
+      gridElem.style.gridTemplateColumns = gridCols(n);
+    }
+    function updateStats() {
+      levelElem.textContent = curLevel + 1;
+      badgeElem.textContent = LEVEL_LABELS[curLevel] || '?';
+      scoreElem.textContent = score;
+    }
+
+    // --- Card Flipping and Game Logic ---
+    let state = {};
+    function makeCards(level) {
+      const total = LEVELS[level];
+      const emojis = pickEmojis(total);
+      gridElem.innerHTML = "";
+      layoutCards(total);
+      for (let i = 0; i < total; i++) {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.emoji = emojis[i];
+        card.dataset.index = i;
+        card.innerHTML = '';
+        card.onclick = ()=>handleFlip(card);
+        gridElem.appendChild(card);
+      }
+    }
+    function flashAllCards() {
       canClick = false;
-      document.querySelectorAll('.card').forEach(card=>{
+      gridElem.querySelectorAll('.card').forEach(card => {
         card.classList.add('flashing');
-        card.innerHTML = card.dataset.val;
+        card.innerHTML = card.dataset.emoji;
       });
       setTimeout(()=>{
-        document.querySelectorAll('.card').forEach(card=>{
+        gridElem.querySelectorAll('.card').forEach(card=>{
           card.classList.remove('flashing');
           card.innerHTML = "";
         });
         canClick = true;
         msgElem.textContent = "Find and match each pair!";
-      }, 5000); // 5 seconds, fixed
+      }, 5000); // 5 seconds show time
     }
 
-    // ...rest of game code, unchanged...
+    function handleFlip(card) {
+      if (!canClick || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+      card.classList.add('flipped');
+      card.innerHTML = card.dataset.emoji;
+      state.flipped.push(card);
+      if (state.flipped.length === 2) {
+        canClick = false;
+        let [a, b] = state.flipped;
+        if (a.dataset.emoji === b.dataset.emoji) {
+          setTimeout(() => {
+            a.classList.add('matched');
+            b.classList.add('matched');
+            a.style.pointerEvents = 'none';
+            b.style.pointerEvents = 'none';
+            score += (6 + curLevel * 2);
+            matches += 1;
+            msgElem.textContent = `Nice! +${6 + curLevel * 2} points! 🎉`;
+            updateStats();
+            if (matches === LEVELS[curLevel] / 2) {
+              // Level done!
+              setTimeout(()=>{
+                msgElem.textContent = "🌟 Level complete! 🌟";
+                if (curLevel + 1 < LEVELS.length) {
+                  nextBtn.style.display = '';
+                  badgeElem.textContent = "Next Level!";
+                } else {
+                  restartBtn.style.display = "";
+                  msgElem.textContent = `🏆 Game complete! Final Score: ${score}`;
+                }
+                canClick = false;
+              }, 1200);
+            } else {
+              canClick = true;
+            }
+            state.flipped = [];
+          }, 700);
+        } else {
+          setTimeout(() => {
+            a.classList.remove('flipped');
+            b.classList.remove('flipped');
+            a.innerHTML = "";
+            b.innerHTML = "";
+            msgElem.textContent = "Try again!";
+            canClick = true;
+            state.flipped = [];
+          }, 900);
+        }
+      }
+    }
+
+    function startLevel(level) {
+      curLevel = level;
+      matches = 0;
+      state.flipped = [];
+      msgElem.textContent = "Memorize the emojis!";
+      nextBtn.style.display = "none";
+      restartBtn.style.display = "none";
+      updateStats();
+      makeCards(level);
+      setTimeout(flashAllCards, 350);
+    }
+
+    nextBtn.onclick = () => startLevel(curLevel + 1);
+    restartBtn.onclick = () => {
+      score = 0;
+      startLevel(0);
+    };
+    // --- Start Game ---
+    startLevel(0);
   </script>
 </body>
 </html>
